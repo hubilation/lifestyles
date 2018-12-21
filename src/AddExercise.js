@@ -58,6 +58,8 @@ const NumericInput = styled(Input)`
 const FormLine = styled.div`
     display:flex;
     align-items: center;
+    min-height: 2.5rem;
+    margin-top: 2px;
 `;
 
 const SubmitLine = styled(FormLine)`
@@ -68,6 +70,8 @@ const Icon = styled.div`
     position: relative;
     top: 2px;
     margin-right: 5px;
+    min-width: 21px;
+    text-align: center;
 `;
 
 const NumberIcon = styled(Icon)`
@@ -102,36 +106,21 @@ const Button = styled.button`
     }
 `;
 
-const CheckButton = styled.div`
-    font-family: ${props => props.theme.bodyFont};
-    background-color: ${props => props.theme.lightGrey};
-    padding: 2px 8px;
-    margin-right: 5px;
-    /* margin-bottom: 3px; */
-    border-radius: 4px;
-    color: ${props => props.theme.grey};
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    :hover {
-        background-color: ${props => props.theme.greyGreen}
-    }
-`;
-
-const BackButton = styled(CheckButton)`
-    padding: 2px 0;
-`;
-
 const Label = styled.label`
         display: flex;
         width: 50%;
-        padding: 0px 8px;
         align-items: center; 
+        
 `;
 
-const WideLabel = styled(Label)`
-    width: 100%;
+const CheckboxLabel = styled(Label)`
+    input {
+        min-width: 21px;
+    }
+    .checkbox-label {
+            font-weight: 600;
+            margin-left: 5px;
+    }
 `;
 
 const Form = styled.form`
@@ -146,14 +135,17 @@ class AddExercise extends Component {
         reps: '',
         duration: '',
         description: '',
-        isReps: false,
-        isDuration: false
+        isSplit: false
     }
     handleChange = (e) => {
         const { name, type, value } = e.target;
         const val = (type === 'number' && value) ? parseFloat(value) : value;
 
         this.setState({ [name]: val });
+    }
+    toggleCheckbox = (e) => {
+        const {name} = e.target;
+        this.setState({[name]: !this.state[name]});
     }
 
     toggleType = (bool, other) => {
@@ -170,7 +162,8 @@ class AddExercise extends Component {
                     this.props.save({ ...this.state });
                 }}>
                     <fieldset>
-                        <TitleInput
+                        <AutoFocusingInput
+                            isTitle
                             type="text"
                             id="name"
                             name="name"
@@ -188,6 +181,16 @@ class AddExercise extends Component {
                                 value={this.state.muscleGroup}
                                 onChange={this.handleChange}
                             />
+                            <CheckboxLabel>
+                                <input type="checkbox"
+                                    id="isSplit"
+                                    name="isSplit"
+                                    value={this.state.isSplit}
+                                    onChange={this.toggleCheckbox}
+                                    checked={this.state.isSplit}
+                                />
+                                <span className="checkbox-label">Split</span> 
+                            </CheckboxLabel>
                         </FormLine>
                         <FormLine>
                             <Label>
@@ -218,15 +221,11 @@ class AddExercise extends Component {
                             </Label>
                         </FormLine>
                         <FormLine>
-                            {this.state.isReps &&
-                                <WideLabel>
-                                    <BackButton onClick={() => this.setState({ isReps: false, isDuration: false, reps: '', duration: '' })}>
-                                        <FaArrowLeft />
-                                    </BackButton>
+                                <Label>
                                     <NumberIcon>
                                         💪
                                     </NumberIcon>
-                                    <AutoFocusingInput
+                                    <NumericInput
                                         type="number"
                                         id="reps"
                                         name="reps"
@@ -234,18 +233,12 @@ class AddExercise extends Component {
                                         value={this.state.reps}
                                         onChange={this.handleChange}
                                     />
-                                    
-                                </WideLabel>
-                            }
-                            {this.state.isDuration &&
-                                <WideLabel>
-                                    <BackButton onClick={() => this.setState({ isReps: false, isDuration: false, reps: '', duration: '' })}>
-                                        <FaArrowLeft />
-                                    </BackButton>
+                                </Label>
+                                <Label>
                                     <Icon>
                                         <FaRegClock />
                                     </Icon>
-                                    <AutoFocusingInput
+                                    <NumericInput
                                         type="number"
                                         id="duration"
                                         name="duration"
@@ -253,27 +246,11 @@ class AddExercise extends Component {
                                         value={this.state.duration}
                                         onChange={this.handleChange}
                                     />
-                                    
-                                </WideLabel>
-                            }
-                            {!this.state.isReps && !this.state.isDuration &&
-                                <>
-                                    <CheckButton onClick={() => this.toggleType('isReps', 'isDuration')}>
-                                        <NumberIcon>
-                                            💪
-                                    </NumberIcon>
-                                        <span>Reps</span>
-                                    </CheckButton>
-                                    <CheckButton onClick={() => this.toggleType('isDuration', 'isReps')}>
-                                        <Icon>
-                                            <FaRegClock />
-                                        </Icon>
-                                        <span>Duration</span>
-                                    </CheckButton>
-                                </>
-                            }
+
+                                </Label>
+
                         </FormLine>
-                        <SubmitLine>
+                        <FormLine>
                             <TextArea
                                 placeholder="Form"
                                 id="description"
@@ -282,6 +259,9 @@ class AddExercise extends Component {
                                 onChange={this.handleChange}
                             >
                             </TextArea>
+                        </FormLine>
+                        <SubmitLine>
+                            
                             <Button>
                                 Add Exercise
                             </Button>

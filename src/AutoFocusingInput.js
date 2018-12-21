@@ -16,6 +16,17 @@ const Input = styled.input`
     flex-grow: 1;
 `;
 
+const TitleInput = styled(Input)`
+    font-size: 5rem;
+    font-family: ${props => props.theme.headerFont};
+    font-weight: 600;
+    width: 100%;
+    ::placeholder{
+        font-weight: 400;
+    }
+`;
+
+
 
 class AutoFocusingInput extends Component {
     constructor(props) {
@@ -27,11 +38,11 @@ class AutoFocusingInput extends Component {
         this.input.current.focus();
     }
     render() {
+        const {isTitle, ...other} = this.props
         return (
-                <Input
-                    ref={this.input}
-                    {...this.props}
-                />
+            <>
+                {isTitle ? <TitleInput ref={this.input} {...other}/> : <Input ref={this.input} {...other}/>}
+            </> 
         );
     }
 }

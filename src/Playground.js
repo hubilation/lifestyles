@@ -40,6 +40,7 @@ class Playground extends React.Component {
         this.setState(previousState=>({
             exercises: [...previousState.exercises, exercise]
         }));
+        console.log(exercise);
         this.toggleAddingExercise();
     }
 
