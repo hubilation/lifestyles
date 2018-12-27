@@ -72,7 +72,8 @@ class Exercise extends Component {
                 reps: 8,
                 complete: false
             },
-        ]  
+        ],
+        editingSetIndex: -1  
     }
     toggleOpen = () => {
         this.setState({ logOpen: !this.state.logOpen });
@@ -83,6 +84,9 @@ class Exercise extends Component {
     }
 
     toggleActiveSet = (i) => {
+        if(this.state.editingSetIndex > -1 && this.state.editingSetIndex !== i){
+            return;
+        }
         this.setState({
             sets: this.state.sets.map((set,index)=>
                 {
@@ -121,6 +125,7 @@ class Exercise extends Component {
     toggleEditing = (e, i) => {
         e.stopPropagation();
         this.setState({
+            editingSetIndex: this.state.sets[i].editing ? -1 : i,
             sets: this.state.sets.map((set, index)=>{
                 return index == i ? {...set, editing: set.editing ? false : true} : set;
             })
@@ -129,13 +134,12 @@ class Exercise extends Component {
 
     saveSetEdit = (e, i, newSet) => {
         e.stopPropagation();
-        console.log(e, i, newSet);
         this.setState({
+            editingSetIndex: -1,
             sets: this.state.sets.map((set, index)=>{
                 return index == i ? {...set, editing: false, ...newSet} : set;
             })
         })
-
     }
 
     render() {

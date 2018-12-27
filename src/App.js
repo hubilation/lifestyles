@@ -19,6 +19,8 @@ const theme = {
   lighterOffWhite: "#FAFAFA",
   veryLightYellow: "#FBFAE2",
   white: "#FFFFFF",
+  orange: "#E8480C",
+  lightOrange: "#E8784F",
   maxWidth: "1000px",
   bs: "0 3px 8px 0 rgba(0,50,0,0.4)",
 

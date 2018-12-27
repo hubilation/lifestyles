@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { FaDumbbell, FaRegClock, FaCheck, FaPen, FaRedo, FaSave } from 'react-icons/fa';
+import { FaDumbbell, FaRegClock, FaCheck, FaPen, FaRedo, FaSave, FaBan } from 'react-icons/fa';
 import AutoFocusingInput from './AutoFocusingInput';
 import { Input, Form } from './styles/FormStyles';
 
@@ -9,11 +9,12 @@ import { Input, Form } from './styles/FormStyles';
 const Entry = styled.div`
     display: flex;
     justify-content: flex-start;
-    padding: ${props => props.active ? '8px' : '2px'} 10px;
+    padding: ${props => props.active ? props.editing ? '10px' : '8px' : '2px'} 10px;
     font-size: ${props => props.active ? '2.5rem' : 'inherit'};
     align-items: center;
     border-bottom: 1px solid ${props => props.theme.lightGrey};
     background-color: ${props => props.editing ? props.theme.veryLightYellow : props.complete ? props.theme.greyGreen : props.active ? props.theme.lighterOffWhite : props.theme.offWhite};
+
 `;
 
 const LogProperty = styled.div`
@@ -75,9 +76,18 @@ const LogButtons = styled.div`
         }
     }
     .save {
-        color: ${props => props.theme.lightGreen};
+        margin-right: 5px;
+        color: ${props => props.theme.midGrey};
         :hover {
             color: ${props => props.theme.lighterGreen};
+            cursor: pointer;
+        }
+    }
+    .cancel {
+        font-size: 60%;
+        color: ${props => props.theme.midGrey};
+        :hover {
+            color: ${props => props.theme.lightOrange};
             cursor: pointer;
         }
     }
@@ -108,7 +118,7 @@ class LogItem extends React.Component {
     render() {
         const { weight, reps, duration, editing, active, complete, setActive, setComplete, setIncomplete, toggleEditing, saveChanges } = this.props;
         return (
-            <Form onSubmit={e=>{
+            <Form onSubmit={e => {
                 e.preventDefault();
                 this.submit();
             }}>
@@ -158,7 +168,13 @@ class LogItem extends React.Component {
                                 </>
                                 }
                                 {!complete && <>
-                                    {!editing ? <FaPen className="edit" onClick={toggleEditing} /> : <FaSave className="save" onClick={this.submit} />}
+                                    {!editing ?
+                                        <FaPen className="edit" onClick={toggleEditing} /> :
+                                        <>
+                                            <FaSave className="save" onClick={this.submit} />
+                                            <FaBan className="cancel" onClick={toggleEditing} />
+                                        </>
+                                    }
                                 </>}
                             </LogButtons>
                         }
