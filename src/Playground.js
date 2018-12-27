@@ -31,7 +31,15 @@ class Playground extends React.Component {
                 sets: 3,
                 reps: 8,
                 description: "Lift heavy brah"
-            }
+            },
+            {
+                name: "Pistol Squat",
+                muscleGroup: "Legs",
+                weight: 185,
+                sets: 3,
+                duration: 30,
+                description: "Lift elegantly brah"
+            },
         ],
         addingExercise: true
     }
@@ -54,7 +62,7 @@ class Playground extends React.Component {
                 {this.state.exercises.map(exercise=>(
                     <Exercise key={exercise.name} {...exercise} />
                 ))}
-                <AddExerciseButton onClick={this.toggleAddingExercise}>{this.state.addingExercise ? 'Cancel' : 'Add Exercise'}</AddExerciseButton>
+                {!this.state.addingExercise && <AddExerciseButton onClick={this.toggleAddingExercise}>Add Exercise</AddExerciseButton> }
                 {this.state.addingExercise && <AddExercise save={this.saveExercise} cancel={this.toggleAddingExercise}/>}
             </div>
         );
