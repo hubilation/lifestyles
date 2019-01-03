@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Wed Jan 02 2019 21:50:35 GMT-0700 (US Mountain Standard Time)
+# timestamp: Thu Jan 03 2019 08:35:02 GMT-0700 (US Mountain Standard Time)
 
 type AggregateUser {
   count: Int!
@@ -55,7 +55,6 @@ type PageInfo {
 enum Permission {
   ADMIN
   USER
-  PERMISSIONUPDATE
   TRAINER
 }
 

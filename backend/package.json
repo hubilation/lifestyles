@@ -23,7 +23,8 @@
     "start": "nodemon -e js,graphql -x node src/index.js",
     "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "prisma deploy --env-file variables.env"
+    "deploy": "prisma deploy --env-file variables.env",
+    "generate": "prisma generate --env-file variables.env"
   },
   "keywords": [],
   "author": "",
