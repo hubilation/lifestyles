@@ -4,6 +4,7 @@ const { randomBytes } = require('crypto');
 
 const Mutations = {
     async signup(parent, args, ctx, info) {
+        debugger;
         args.email = args.email.toLowerCase();
         //hash their pass
         const password = await bcrypt.hash(args.password, 10);
