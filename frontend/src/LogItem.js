@@ -14,7 +14,6 @@ const Entry = styled.div`
     align-items: center;
     border-bottom: 1px solid ${props => props.theme.lightGrey};
     background-color: ${props => props.editing ? props.theme.veryLightYellow : props.complete ? props.theme.greyGreen : props.active ? props.theme.lighterOffWhite : props.theme.offWhite};
-
 `;
 
 const LogProperty = styled.div`

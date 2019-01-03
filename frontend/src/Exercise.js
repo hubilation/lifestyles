@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { FaDumbbell, FaRegClock, FaCheck, FaPen } from 'react-icons/fa';
+import { FaDumbbell, FaRegClock } from 'react-icons/fa';
 import { Icon, NumberIcon, FormLine } from './styles/FormStyles';
 
 import LogItem from './LogItem';
 
 const Card = styled.div`
-    background-color: ${props => props.theme.white};
+    background-color: ${props => props.complete ? props.theme.greyGreen : props.theme.white};
     width: 100%;
     border-radius: 10px;
     padding: 10px 10px;
     box-shadow: ${props => props.theme.bs};
     border-left: 4px solid ${props => props.theme.lightGreen};
     margin: 20px 0;
+
 `;
 
 const Entry = styled.div`
@@ -40,7 +41,6 @@ const NumericValue = styled(EntrySubHeader)`
     width: 25%;
 `;
 
-
 const Log = styled.div`
     margin-top: 15px;
     display: flex;
@@ -55,7 +55,7 @@ class Exercise extends Component {
     state = {
         logOpen: true,
         logGenerated: false,
-        sets:[
+        sets: [
             {
                 weight: 185,
                 reps: 8,
@@ -73,7 +73,8 @@ class Exercise extends Component {
                 complete: false
             },
         ],
-        editingSetIndex: -1  
+        editingSetIndex: -1,
+        excerciseComplete: false
     }
     toggleOpen = () => {
         this.setState({ logOpen: !this.state.logOpen });
@@ -84,41 +85,49 @@ class Exercise extends Component {
     }
 
     toggleActiveSet = (i) => {
-        if(this.state.editingSetIndex > -1 && this.state.editingSetIndex !== i){
+        if (this.state.editingSetIndex > -1 && this.state.editingSetIndex !== i) {
             return;
         }
         this.setState({
-            sets: this.state.sets.map((set,index)=>
-                {
-                    return {...set, active: index == i};
-                }
+            sets: this.state.sets.map((set, index) => {
+                return { ...set, active: index == i };
+            }
             )
         })
     }
 
     toggleCompleteSet = (e, i) => {
         e.stopPropagation();
+
+        const newSets = this.state.sets.map((set, index) => {
+            if (index == i) {
+                return { ...set, complete: true, active: false };
+            }
+            if (index == i + 1) {
+                return { ...set, active: true };
+            }
+            return set;
+        });
+
+        const complete = newSets.every(set=>set.complete);
+
         this.setState({
-            sets: this.state.sets.map((set,index)=>
-                {
-                    if(index == i){
-                        return {...set, complete: true, active: false};
-                    }
-                    if(index == i + 1){
-                        return {...set, active: true};
-                    }
-                    return set;
-                }
-            )
+            sets: newSets,
+            exerciseComplete: complete,
+            logOpen: !complete
         });
     }
 
     resetSet = (e, i) => {
         e.stopPropagation();
+
+        const newSets = this.state.sets.map((set, index) => {
+            return index == i ? { ...set, complete: false } : set;
+        });
+
         this.setState({
-            sets: this.state.sets.map((set, index)=>{
-                return index == i ? {...set, complete: false} : set;
-            })
+            sets: newSets,
+            exerciseComplete: newSets.every(set=>set.complete)
         });
     }
 
@@ -126,8 +135,8 @@ class Exercise extends Component {
         e.stopPropagation();
         this.setState({
             editingSetIndex: this.state.sets[i].editing ? -1 : i,
-            sets: this.state.sets.map((set, index)=>{
-                return index == i ? {...set, editing: set.editing ? false : true} : set;
+            sets: this.state.sets.map((set, index) => {
+                return index == i ? { ...set, editing: set.editing ? false : true } : set;
             })
         });
     }
@@ -136,8 +145,8 @@ class Exercise extends Component {
         e.stopPropagation();
         this.setState({
             editingSetIndex: -1,
-            sets: this.state.sets.map((set, index)=>{
-                return index == i ? {...set, editing: false, ...newSet} : set;
+            sets: this.state.sets.map((set, index) => {
+                return index == i ? { ...set, editing: false, ...newSet } : set;
             })
         })
     }
@@ -150,13 +159,13 @@ class Exercise extends Component {
             sets,
             reps,
             duration,
-            description
+            description,
+            onCompleteExercise
         } = this.props;
 
         return (
-            <Card>
-
-                <Entry onClick={this.toggleOpen}>
+            <Card complete={this.state.exerciseComplete}>
+                <Entry onClick={this.toggleOpen} >
                     <EntryHeader>{name}</EntryHeader>
                     <EntrySubHeader>{muscleGroup}</EntrySubHeader>
                     <FormLine>
@@ -196,26 +205,26 @@ class Exercise extends Component {
 
 
                 </Entry>
-                {this.state.logOpen && 
+                {this.state.logOpen &&
                     <Log>
-                        {this.state.sets.map((set, i)=>(
-                            <LogItem 
-                                weight={set.weight} 
-                                reps={set.reps} 
+                        {this.state.sets.map((set, i) => (
+                            <LogItem
+                                weight={set.weight}
+                                reps={set.reps}
                                 duration={set.duration}
                                 complete={set.complete}
                                 active={set.active}
                                 editing={set.editing}
                                 key={i}
-                                setActive={()=>this.toggleActiveSet(i)}
-                                setComplete={(e)=>this.toggleCompleteSet(e, i)}
-                                setIncomplete={(e)=>this.resetSet(e, i)}
-                                toggleEditing={(e)=>this.toggleEditing(e, i)}
-                                saveChanges={(e, set)=>this.saveSetEdit(e, i, set)}
+                                setActive={() => this.toggleActiveSet(i)}
+                                setComplete={(e) => this.toggleCompleteSet(e, i)}
+                                setIncomplete={(e) => this.resetSet(e, i)}
+                                toggleEditing={(e) => this.toggleEditing(e, i)}
+                                saveChanges={(e, set) => this.saveSetEdit(e, i, set)}
                             />
                         ))}
                     </Log>
-                    }
+                }
             </Card>
         );
     }
