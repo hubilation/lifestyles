@@ -9,6 +9,7 @@ import { theme, GlobalStyle } from './styles/GlobalStyle';
 import Header from "./Header";
 import Playground from "./Playground";
 import Signin from './Signin';
+import PrivateRoute from './PrivateRoute';
 import User from './User';
 import client from './lib/client';
 
@@ -30,26 +31,31 @@ class App extends Component {
         <Router>
           <ThemeProvider theme={theme}>
             <User>
-              {({ data: { me } }) => (
-                <>
-                  <GlobalStyle />
-                  <Header me={me} />
-                  <StyledPage>
-                    <header className="App-header">
-                    </header>
-                    <Inner>
-                      <Route path="/" exact component={Playground} />
-                      <Route path="/signin" component={Signin} />
-                    </Inner>
-                  </StyledPage>
-                </>
-              )}
+              {({ data: { me }, loading }) => {
+                if (loading) {
+                  return <p>Loading...</p>
+                }
+                return (
+                  <>
+                    <GlobalStyle />
+                    <Header me={me} />
+                    <StyledPage>
+                      <header className="App-header">
+                      </header>
+                      <Inner>
+                        <PrivateRoute me={me} path="/" exact component={Playground} />
+                        {/* <Route path="/signin" component={Signin} /> */}
+                      </Inner>
+                    </StyledPage>
+                  </>
+                )
+              }}
             </User>
           </ThemeProvider>
-        </Router>
-      </ApolloProvider>
-    );
-  }
-}
+            </Router>
+          </ApolloProvider>
+        );
+      }
+    }
 
 export default App;
