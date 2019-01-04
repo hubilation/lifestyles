@@ -7,10 +7,11 @@ const NavBar = styled.div`
     background-color: ${props=>props.theme.white};
 `;
 
-const Header = () => {
+const Header = ({me}) => {
     return (
         <NavBar>
             <h1>Lifestyles</h1>
+            {me && <span>{me.name}</span>}
         </NavBar>
     );
 };

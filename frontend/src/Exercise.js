@@ -14,7 +14,6 @@ const Card = styled.div`
     box-shadow: ${props => props.theme.bs};
     border-left: 4px solid ${props => props.theme.lightGreen};
     margin: 20px 0;
-
 `;
 
 const Entry = styled.div`
