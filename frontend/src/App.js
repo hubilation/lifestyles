@@ -9,8 +9,11 @@ import { theme, GlobalStyle } from './styles/GlobalStyle';
 import Header from "./Header";
 import Playground from "./Playground";
 import Signin from './Signin';
+import Signup from './Signup';
 import PrivateRoute from './PrivateRoute';
 import User from './User';
+import Loading from './Loading';
+import Welcome from './Welcome';
 import client from './lib/client';
 
 const StyledPage = styled.div`
@@ -33,7 +36,7 @@ class App extends Component {
             <User>
               {({ data: { me }, loading }) => {
                 if (loading) {
-                  return <p>Loading...</p>
+                  return <Loading />
                 }
                 return (
                   <>
@@ -43,7 +46,9 @@ class App extends Component {
                       <header className="App-header">
                       </header>
                       <Inner>
-                        <PrivateRoute me={me} path="/" exact component={Playground} />
+                        <Route me={me} path="/" exact component={Welcome} />
+                        <Route me={me} path="/signup" component={Signup} />
+                        <PrivateRoute me={me} path="/me" component={Playground} />
                         {/* <Route path="/signin" component={Signin} /> */}
                       </Inner>
                     </StyledPage>

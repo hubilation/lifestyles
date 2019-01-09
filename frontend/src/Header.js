@@ -13,7 +13,6 @@ const NavBar = styled.div`
 const Header = ({me}) => {
     return (
         <NavBar>
-            <h1>Lifestyles</h1>
             {me && <><span>{me.name}</span><Signout/></>}
         </NavBar>
     );
