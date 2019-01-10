@@ -35,7 +35,7 @@ server.express.use(async (req, res, next) => {
 server.start({
     cors: {
         credentials: true,
-        origin: "/:80$/"
+        origin: "http://142.93.90.163"
     }
 }, deets => {
     console.log(`Server is now running on http://localhost:${deets.port}`)
