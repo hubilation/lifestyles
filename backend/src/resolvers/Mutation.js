@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { randomBytes } = require('crypto');
+const { throwIfNotLoggedIn, isUserOrHasPermission } = require('../utils');
 
 const Mutations = {
     async signup(parent, args, ctx, info) {
@@ -50,6 +51,87 @@ const Mutations = {
         ctx.response.clearCookie('token');
         return { message: 'Goodbye!' };
     },
+    async createExercise(parent, args, ctx, info) {
+        const item = await ctx.db.mutation.createExercise({
+            data: args
+        }, info);
+
+        return item;
+    },
+    async createSession(parent, args, ctx, info){
+        // throwIfNotLoggedIn(ctx);
+        // isUserOrHasPermission(ctx, args.userId, ['ADMIN']);
+
+        const session = await ctx.db.mutation.createSession({
+            data: {
+                exercises: [],
+                user: {
+                    connect: {
+                        id: args.userId
+                    }
+                },
+                completed: false
+            }
+        }, info);
+
+        return session;
+    },
+    async addSessionExercise(parent, args, ctx, info){
+        // throwIfNotLoggedIn(ctx);
+
+        const session = await ctx.db.query.session({where:{id: args.sessionId}}, `{user {id}}`);
+        if(!session){
+            throw new Error("Cannot locate that session");
+        }
+        // isUserOrHasPermission(ctx, session.user.id, ['ADMIN']);
+        const exercise = await ctx.db.query.exercise({where:{id: args.exerciseId}}, `{id}`);
+        if(!exercise){
+            throw new Error("Cannot locate that exercise");
+        }
+
+        const sessionExercise = await ctx.db.mutation.createSessionExercise({
+            data: {
+                sets: [],
+                session: {
+                    connect: {id: args.sessionId}
+                },
+                exercise: {
+                    connect: {
+                        id: args.exerciseId
+                    }
+                }
+            }
+        }, info);
+
+        console.log(sessionExercise);
+        return sessionExercise;
+    },
+    async addSessionExerciseSet(parent, args, ctx, info){
+        // throwIfNotLoggedIn(ctx);
+        const sessionExercise = await ctx.db.query.sessionExercise({where:{
+            id: args.sessionExerciseId
+        }}, `{id session {id user {id}}}`);
+        if(sessionExercise === null){
+            throw new Error("Cannot locate that session exercise");
+        }
+
+        const setData = {...args};
+        delete setData.sessionExerciseId;
+
+        // isUserOrHasPermission(ctx, sessionExercise.session.user.id, ['ADMIN']);
+        const set = await ctx.db.mutation.createSessionExerciseSet({
+            data: {
+                sessionExercise: {
+                    connect: {
+                        id: args.sessionExerciseId
+                    },
+                },
+                ...setData
+            }
+        }, info);
+
+        return set;
+    }
 };
 
 module.exports = Mutations;

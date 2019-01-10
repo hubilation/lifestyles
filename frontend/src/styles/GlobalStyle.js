@@ -16,6 +16,7 @@ const theme = {
     orange: "#E8480C",
     lightOrange: "#E8784F",
     maxWidth: "1000px",
+    maxCardWidth: "400px",
     bs: "0 3px 8px 0 rgba(0,50,0,0.4)",
 
     headerFont: "babasneue",

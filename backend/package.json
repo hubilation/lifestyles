@@ -25,9 +25,11 @@
     "docker:start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy:local": "prisma deploy --env-file local.env",
-    "deploy:dev": "prisma deploy --env-file dev.env",
-    "generate": "prisma generate --env-file variables.env",
-    "prisma-token:dev": "prisma token --env-file dev.env -c"
+    "deploy:dev": "prisma deploy --env-file local.env",
+    "generate": "prisma generate --env-file local.env",
+    "prisma-token:dev": "prisma token --env-file dev.env -c",
+    "prisma-token:local": "prisma token --env-file local.env -c"
+
   },
   "keywords": [],
   "author": "",

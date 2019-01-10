@@ -13,3 +13,40 @@ enum Permission {
   USER
   TRAINER
 }
+
+enum SetType {
+  REPS
+  TIME
+}
+
+type Session {
+  id: ID! @unique
+  user: User! @relation(name: "SessionToUser")
+  trainer: User @relation(name: "SessionToTrainer")
+  exercises: [SessionExercise]!
+  createdAt: DateTime!
+  completed: Boolean!
+}
+
+type Exercise {
+  id: ID! @unique
+  name: String!
+  muscleGroup: String
+  description: String
+  setType: SetType!
+}
+
+type SessionExercise {
+  id: ID! @unique
+  session: Session!
+  exercise: Exercise!
+  sets: [SessionExerciseSet]!
+}
+
+type SessionExerciseSet {
+  id: ID! @unique
+  sessionExercise: SessionExercise!
+  setNumber: Int!
+  amount: Int!
+  type: SetType!
+}

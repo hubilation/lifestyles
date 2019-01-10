@@ -24,7 +24,9 @@ const StyledPage = styled.div`
 const Inner = styled.div`
   width: 90%;
   margin: 0 auto;
-  /* padding: 2rem; */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
 
 class App extends Component {

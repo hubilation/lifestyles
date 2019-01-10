@@ -163,7 +163,7 @@ class LogItem extends React.Component {
                             <LogButtons>
                                 {!editing && <>
                                     {complete && <FaRedo className="reset" onClick={setIncomplete} />}
-                                    {!complete && <FaCheck className="complete" complete={complete} onClick={setComplete} />}
+                                    {!complete && <FaCheck className="complete" onClick={setComplete} />}
                                 </>
                                 }
                                 {!complete && <>

@@ -8,6 +8,14 @@ type Mutation {
     signup(email: String!, password: String!, name: String!): User!
     signin(email: String!, password: String!): User!
     signout: SuccessMessage
+    createExercise(name: String!, muscleGroup: String!, description: String, setType: SetType!) : Exercise
+    createSession(userId: ID!, trainerId: ID): Session,
+    addSessionExercise(sessionId: ID!, exerciseId: ID!): SessionExercise
+    addSessionExerciseSet(
+        sessionExerciseId: ID!, 
+        setNumber: Int!, 
+        amount: Int!, 
+        type: SetType!) : SessionExerciseSet
 }
 
 type Query {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
+import {Link} from 'react-router-dom';
 
 import { CURRENT_USER_QUERY } from './User';
 import { Button } from './styles/FormStyles';
@@ -19,6 +20,7 @@ const SIGNIN_MUTATION = gql`
 const Card = styled.div`
     background-color: ${props => props.theme.white};
     width: 100%;
+    max-width: ${props=>props.theme.maxCardWidth};
     border-radius: 10px;
     padding: 10px 10px;
     box-shadow: ${props => props.theme.bs};
@@ -50,6 +52,24 @@ const Input = styled.input`
     }
 `;
 
+const SignUpCta = styled.div`
+    border: 0;
+    background: none;
+    font-family: ${props => props.theme.headerFont};
+    font-size: 2rem;
+    margin: 0 auto;
+    text-align: center;
+    display: block;
+
+    a {
+        color: ${props => props.theme.lightGreen};
+        :hover {
+            cursor: pointer;
+            color: ${props => props.theme.lighterGreen};
+        }
+    }
+`;
+
 class Signin extends Component {
     state = {
         password: '',
@@ -68,37 +88,41 @@ class Signin extends Component {
                 ]}
             >
                 {(signin, { error, loading }) => (
-                    <Card>
-                        <form method="post" onSubmit={async (e)=> {
-                            e.preventDefault();
-                            await signin();
-                        }}>
-                            <fieldset disabled={loading} aria-busy={loading}>
-                                <CardHeader>
-                                    Sign in to your account
+                    <>
+                        <Card>
+                            <form method="post" onSubmit={async (e) => {
+                                e.preventDefault();
+                                await signin();
+                            }}>
+                                <fieldset disabled={loading} aria-busy={loading}>
+                                    <CardHeader>
+                                        Sign in to your account
                                 </CardHeader>
-                                <Input
-                                    type="text"
-                                    id="email"
-                                    name="email"
-                                    placeholder="Email"
-                                    required
-                                    value={this.state.email}
-                                    onChange={this.saveToSate}
-                                />
-                                <Input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    placeholder="Password"
-                                    required
-                                    value={this.state.password}
-                                    onChange={this.saveToSate}
-                                />
-                                <Button type="submit">Sign In</Button>
-                            </fieldset>
-                        </form>
-                    </Card>
+                                    <Input
+                                        type="text"
+                                        id="email"
+                                        name="email"
+                                        placeholder="Email"
+                                        required
+                                        value={this.state.email}
+                                        onChange={this.saveToSate}
+                                    />
+                                    <Input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        placeholder="Password"
+                                        required
+                                        value={this.state.password}
+                                        onChange={this.saveToSate}
+                                    />
+                                    <Button type="submit">Sign In</Button>
+                                </fieldset>
+                            </form>
+                        </Card>
+                        <SignUpCta>
+                            Don't have an account? <Link to="/signup">Sign up!</Link></SignUpCta>
+                    </>
                 )}
             </Mutation>
         );
