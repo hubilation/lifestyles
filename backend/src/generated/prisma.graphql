@@ -1,5 +1,5 @@
 # source: http://142.93.90.163:4466
-# timestamp: Wed Jan 09 2019 19:43:10 GMT-0700 (US Mountain Standard Time)
+# timestamp: Thu Jan 10 2019 08:14:43 GMT-0700 (US Mountain Standard Time)
 
 type AggregateExercise {
   count: Int!
@@ -31,7 +31,9 @@ scalar DateTime
 type Exercise implements Node {
   id: ID!
   name: String!
+  name_lower: String!
   muscleGroup: String
+  muscleGroup_lower: String
   description: String
   setType: SetType!
 }
@@ -48,7 +50,9 @@ type ExerciseConnection {
 
 input ExerciseCreateInput {
   name: String!
+  name_lower: String!
   muscleGroup: String
+  muscleGroup_lower: String
   description: String
   setType: SetType!
 }
@@ -72,8 +76,12 @@ enum ExerciseOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  name_lower_ASC
+  name_lower_DESC
   muscleGroup_ASC
   muscleGroup_DESC
+  muscleGroup_lower_ASC
+  muscleGroup_lower_DESC
   description_ASC
   description_DESC
   setType_ASC
@@ -87,7 +95,9 @@ enum ExerciseOrderByInput {
 type ExercisePreviousValues {
   id: ID!
   name: String!
+  name_lower: String!
   muscleGroup: String
+  muscleGroup_lower: String
   description: String
   setType: SetType!
 }
@@ -133,21 +143,27 @@ input ExerciseSubscriptionWhereInput {
 
 input ExerciseUpdateDataInput {
   name: String
+  name_lower: String
   muscleGroup: String
+  muscleGroup_lower: String
   description: String
   setType: SetType
 }
 
 input ExerciseUpdateInput {
   name: String
+  name_lower: String
   muscleGroup: String
+  muscleGroup_lower: String
   description: String
   setType: SetType
 }
 
 input ExerciseUpdateManyMutationInput {
   name: String
+  name_lower: String
   muscleGroup: String
+  muscleGroup_lower: String
   description: String
   setType: SetType
 }
@@ -253,6 +269,46 @@ input ExerciseWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  name_lower: String
+
+  """All values that are not equal to given value."""
+  name_lower_not: String
+
+  """All values that are contained in given list."""
+  name_lower_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_lower_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lower_lt: String
+
+  """All values less than or equal the given value."""
+  name_lower_lte: String
+
+  """All values greater than the given value."""
+  name_lower_gt: String
+
+  """All values greater than or equal the given value."""
+  name_lower_gte: String
+
+  """All values containing the given string."""
+  name_lower_contains: String
+
+  """All values not containing the given string."""
+  name_lower_not_contains: String
+
+  """All values starting with the given string."""
+  name_lower_starts_with: String
+
+  """All values not starting with the given string."""
+  name_lower_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_lower_ends_with: String
+
+  """All values not ending with the given string."""
+  name_lower_not_ends_with: String
   muscleGroup: String
 
   """All values that are not equal to given value."""
@@ -293,6 +349,46 @@ input ExerciseWhereInput {
 
   """All values not ending with the given string."""
   muscleGroup_not_ends_with: String
+  muscleGroup_lower: String
+
+  """All values that are not equal to given value."""
+  muscleGroup_lower_not: String
+
+  """All values that are contained in given list."""
+  muscleGroup_lower_in: [String!]
+
+  """All values that are not contained in given list."""
+  muscleGroup_lower_not_in: [String!]
+
+  """All values less than the given value."""
+  muscleGroup_lower_lt: String
+
+  """All values less than or equal the given value."""
+  muscleGroup_lower_lte: String
+
+  """All values greater than the given value."""
+  muscleGroup_lower_gt: String
+
+  """All values greater than or equal the given value."""
+  muscleGroup_lower_gte: String
+
+  """All values containing the given string."""
+  muscleGroup_lower_contains: String
+
+  """All values not containing the given string."""
+  muscleGroup_lower_not_contains: String
+
+  """All values starting with the given string."""
+  muscleGroup_lower_starts_with: String
+
+  """All values not starting with the given string."""
+  muscleGroup_lower_not_starts_with: String
+
+  """All values ending with the given string."""
+  muscleGroup_lower_ends_with: String
+
+  """All values not ending with the given string."""
+  muscleGroup_lower_not_ends_with: String
   description: String
 
   """All values that are not equal to given value."""
@@ -448,6 +544,8 @@ type Session implements Node {
   id: ID!
   user: User!
   trainer: User
+  name: String
+  note: String
   exercises(where: SessionExerciseWhereInput, orderBy: SessionExerciseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SessionExercise!]
   createdAt: DateTime!
   completed: Boolean!
@@ -464,6 +562,8 @@ type SessionConnection {
 }
 
 input SessionCreateInput {
+  name: String
+  note: String
   completed: Boolean!
   user: UserCreateOneInput!
   trainer: UserCreateOneInput
@@ -476,6 +576,8 @@ input SessionCreateOneWithoutExercisesInput {
 }
 
 input SessionCreateWithoutExercisesInput {
+  name: String
+  note: String
   completed: Boolean!
   user: UserCreateOneInput!
   trainer: UserCreateOneInput
@@ -1130,6 +1232,10 @@ input SessionExerciseWhereUniqueInput {
 enum SessionOrderByInput {
   id_ASC
   id_DESC
+  name_ASC
+  name_DESC
+  note_ASC
+  note_DESC
   createdAt_ASC
   createdAt_DESC
   completed_ASC
@@ -1140,6 +1246,8 @@ enum SessionOrderByInput {
 
 type SessionPreviousValues {
   id: ID!
+  name: String
+  note: String
   createdAt: DateTime!
   completed: Boolean!
 }
@@ -1184,6 +1292,8 @@ input SessionSubscriptionWhereInput {
 }
 
 input SessionUpdateInput {
+  name: String
+  note: String
   completed: Boolean
   user: UserUpdateOneRequiredInput
   trainer: UserUpdateOneInput
@@ -1191,6 +1301,8 @@ input SessionUpdateInput {
 }
 
 input SessionUpdateManyMutationInput {
+  name: String
+  note: String
   completed: Boolean
 }
 
@@ -1202,6 +1314,8 @@ input SessionUpdateOneRequiredWithoutExercisesInput {
 }
 
 input SessionUpdateWithoutExercisesDataInput {
+  name: String
+  note: String
   completed: Boolean
   user: UserUpdateOneRequiredInput
   trainer: UserUpdateOneInput
@@ -1261,6 +1375,86 @@ input SessionWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  note: String
+
+  """All values that are not equal to given value."""
+  note_not: String
+
+  """All values that are contained in given list."""
+  note_in: [String!]
+
+  """All values that are not contained in given list."""
+  note_not_in: [String!]
+
+  """All values less than the given value."""
+  note_lt: String
+
+  """All values less than or equal the given value."""
+  note_lte: String
+
+  """All values greater than the given value."""
+  note_gt: String
+
+  """All values greater than or equal the given value."""
+  note_gte: String
+
+  """All values containing the given string."""
+  note_contains: String
+
+  """All values not containing the given string."""
+  note_not_contains: String
+
+  """All values starting with the given string."""
+  note_starts_with: String
+
+  """All values not starting with the given string."""
+  note_not_starts_with: String
+
+  """All values ending with the given string."""
+  note_ends_with: String
+
+  """All values not ending with the given string."""
+  note_not_ends_with: String
   createdAt: DateTime
 
   """All values that are not equal to given value."""

@@ -20,7 +20,9 @@ const Query = {
 
         // 2. if they do, query all users
         return ctx.db.query.users({}, info);
-    }
+    },
+    exercises: forwardTo('db'),
+    sessions: forwardTo('db')
 };
 
 module.exports = Query;

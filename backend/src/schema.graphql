@@ -9,7 +9,7 @@ type Mutation {
     signin(email: String!, password: String!): User!
     signout: SuccessMessage
     createExercise(name: String!, muscleGroup: String!, description: String, setType: SetType!) : Exercise
-    createSession(userId: ID!, trainerId: ID): Session,
+    createSession(userId: ID!, trainerId: ID, name: String, note: String): Session,
     addSessionExercise(sessionId: ID!, exerciseId: ID!): SessionExercise
     addSessionExerciseSet(
         sessionExerciseId: ID!, 
@@ -21,4 +21,16 @@ type Mutation {
 type Query {
     me: User
     users: [User]!
+    exercises(
+        where: ExerciseWhereInput
+        orderBy: ExerciseOrderByInput
+        skip: Int,
+        first: Int
+    ): [Exercise]!
+    sessions(
+        where: SessionWhereInput
+        orderBy: SessionOrderByInput
+        skip: Int,
+        first: Int
+    ): [Session]!
 }

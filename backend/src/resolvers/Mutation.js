@@ -53,7 +53,11 @@ const Mutations = {
     },
     async createExercise(parent, args, ctx, info) {
         const item = await ctx.db.mutation.createExercise({
-            data: args
+            data: {
+                name_lower: args.name.toLowerCase(),
+                muscleGroup_lower: args.muscleGroup && args.muscleGroup.toLowerCase(),
+                ...args
+            }
         }, info);
 
         return item;
@@ -70,7 +74,9 @@ const Mutations = {
                         id: args.userId
                     }
                 },
-                completed: false
+                completed: false,
+                name: args.name,
+                note: args.note
             }
         }, info);
 
