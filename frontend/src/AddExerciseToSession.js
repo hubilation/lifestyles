@@ -38,11 +38,10 @@ const SearchBar = styled.div`
         border-radius: 4px;
         border: 1px solid ${props => props.theme.lightGrey};
         padding: 4px;
-        width: 90%;
+        width: 85%;
         ::placeholder {
             color: ${props => props.theme.lightGrey};
         }
-        box-shadow: 1px 2px rgba(0,50,0,0.2);
     }
 `;
 
