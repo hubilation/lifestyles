@@ -8,6 +8,7 @@ import "./App.css";
 import { theme, GlobalStyle } from './styles/GlobalStyle';
 import Header from "./Header";
 import Playground from "./Playground";
+import Me from './Me';
 import Signin from './Signin';
 import Signup from './Signup';
 import PrivateRoute from './PrivateRoute';
@@ -15,6 +16,7 @@ import User from './User';
 import Loading from './Loading';
 import Welcome from './Welcome';
 import client from './lib/client';
+import Session from "./Session";
 
 const StyledPage = styled.div`
   background: ${props => props.theme.offWhite};
@@ -22,7 +24,6 @@ const StyledPage = styled.div`
 `;
 
 const Inner = styled.div`
-  width: 90%;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -50,7 +51,8 @@ class App extends Component {
                       <Inner>
                         <Route me={me} path="/" exact component={Welcome} />
                         <Route me={me} path="/signup" component={Signup} />
-                        <PrivateRoute me={me} path="/me" component={Playground} />
+                        <Route me={me} path="/playground" component={Playground} />
+                        <PrivateRoute me={me} path="/me" component={Session} />
                         {/* <Route path="/signin" component={Signin} /> */}
                       </Inner>
                     </StyledPage>

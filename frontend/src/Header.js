@@ -6,14 +6,13 @@ import Signout from './Signout';
 
 const NavBar = styled.div`
     width: 100%;
-    height: 75px;
-    background-color: ${props=>props.theme.white};
+    /* background-color: ${props=>props.theme.white}; */
 `;
 
 const Header = ({me}) => {
     return (
         <NavBar>
-            {me && <><span>{me.name}</span><Signout/></>}
+            {/* {me && <><span>{me.name}</span><Signout/></>} */}
         </NavBar>
     );
 };

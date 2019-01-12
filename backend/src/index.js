@@ -1,6 +1,6 @@
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-require('dotenv').config({ path: 'dev.env' });
+require('dotenv').config({ path: '.env' });
 const createServer = require('./createServer');
 const db = require('./db');
 const cors = require('cors')
@@ -35,7 +35,7 @@ server.express.use(async (req, res, next) => {
 server.start({
     cors: {
         credentials: true,
-        origin: "http://zackhuber.com"
+        origin: /:3000$/
     }
 }, deets => {
     console.log(`Server is now running on http://localhost:${deets.port}`)
