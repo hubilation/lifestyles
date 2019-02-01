@@ -6,9 +6,9 @@ import { FaSearch } from 'react-icons/fa';
 const Container = styled.div`
     width: 100%;
     margin: 0;
-    background-color: ${props => props.theme.white};
+    background-color: ${props => props.theme.greyGreen};
     font-family: ${props => props.theme.headerFont};
-    border-left: 4px solid ${props => props.theme.lightOrange};
+    border-left: 2px solid ${props => props.theme.lightGrey};
 `;
 
 const Header = styled.div`

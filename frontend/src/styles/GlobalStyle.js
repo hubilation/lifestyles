@@ -12,6 +12,7 @@ const theme = {
     offWhite: "#EDEDED",
     lighterOffWhite: "#FAFAFA",
     veryLightYellow: "#FBFAE2",
+    lightYellow: "#FDFF7A",
     white: "#FFFFFF",
     orange: "#E8480C",
     lightOrange: "#E8784F",

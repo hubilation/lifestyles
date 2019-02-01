@@ -78,26 +78,26 @@ class Session extends Component {
                         January 11th, 2019
                     </SessionDate>
                 </SessionHeader>
-                {/* <Exercise>
+                <Exercise>
                     <ExerciseHeader>
                         Back Squat
                     </ExerciseHeader>
 
                 </Exercise>
-                <Exercise active>
+                <Exercise>
                     <ExerciseHeader>
                         Bench Press
                     </ExerciseHeader>
-                    <Sets>
+                    {/* <Sets>
 
-                    </Sets>
+                    </Sets> */}
                 </Exercise>
                 <Exercise>
                     <ExerciseHeader>
                         Overhead Press
                     </ExerciseHeader>
                 </Exercise>
-                <AddExerciseCta>
+                {/* <AddExerciseCta>
                    <FaPlus class="icon"/> Add Exercise
                 </AddExerciseCta> */}
                 <AddExerciseToSession/>
