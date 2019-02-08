@@ -46,8 +46,6 @@ class App extends Component {
                     <GlobalStyle />
                     <Header me={me} />
                     <StyledPage>
-                      <header className="App-header">
-                      </header>
                       <Inner>
                         <Route me={me} path="/" exact component={Welcome} />
                         <Route me={me} path="/signup" component={Signup} />

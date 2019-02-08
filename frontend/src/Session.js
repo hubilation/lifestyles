@@ -46,6 +46,12 @@ const Sets = styled.ul`
     font-size: 2rem;
     height: 200px;
     background-color: ${props => props.theme.lighterOffWhite};
+    display: grid;
+    grid-auto-columns: 100px;
+`;
+
+const Set = styled.li`
+    display: grid;
 `;
 
 const AddExerciseCta = styled.div`
@@ -66,6 +72,7 @@ const AddExerciseCta = styled.div`
 `;
 
 
+
 class Session extends Component {
     render() {
         return (
@@ -82,7 +89,9 @@ class Session extends Component {
                     <ExerciseHeader>
                         Back Squat
                     </ExerciseHeader>
+                    <Sets>
 
+                    </Sets>
                 </Exercise>
                 <Exercise>
                     <ExerciseHeader>
