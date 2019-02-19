@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "./App.css";
 import { theme, GlobalStyle } from './styles/GlobalStyle';
 import Header from "./Header";
-import Playground from "./Playground";
 import Me from './Me';
 import Signin from './Signin';
 import Signup from './Signup';
@@ -49,7 +48,6 @@ class App extends Component {
                       <Inner>
                         <Route me={me} path="/" exact component={Welcome} />
                         <Route me={me} path="/signup" component={Signup} />
-                        <Route me={me} path="/playground" component={Playground} />
                         <PrivateRoute me={me} path="/me" component={Session} />
                         {/* <Route path="/signin" component={Signin} /> */}
                       </Inner>

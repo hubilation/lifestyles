@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { FaPlus } from 'react-icons/fa';
+import Exercise from './SessionExercise';
 
 import AddExerciseToSession from './AddExerciseToSession';
 
@@ -26,32 +26,6 @@ const SessionName = styled.div`
 const SessionDate = styled.div`
     font-size: 2.5rem;
     color: ${props => props.theme.midGrey};
-`;
-
-const Exercise = styled.div`
-    width: 100%;
-    background-color: ${props => props.theme.white};
-    font-family: ${props => props.theme.headerFont};
-    border-left: 2px solid ${props => props.active ? props.theme.lightGreen : props.theme.offGrey};
-    border-bottom: 1px solid ${props => props.theme.offWhite};
-    font-size: ${props => props.active ? '5rem' : '3rem'}; 
-`;
-
-const ExerciseHeader = styled.div`
-    padding: 10px 0 10px 10px;
-    font-size: 100%;
-`;
-
-const Sets = styled.ul`
-    font-size: 2rem;
-    height: 200px;
-    background-color: ${props => props.theme.lighterOffWhite};
-    display: grid;
-    grid-auto-columns: 100px;
-`;
-
-const Set = styled.li`
-    display: grid;
 `;
 
 const AddExerciseCta = styled.div`
@@ -85,31 +59,12 @@ class Session extends Component {
                         January 11th, 2019
                     </SessionDate>
                 </SessionHeader>
-                <Exercise>
-                    <ExerciseHeader>
-                        Back Squat
-                    </ExerciseHeader>
-                    <Sets>
 
-                    </Sets>
-                </Exercise>
-                <Exercise>
-                    <ExerciseHeader>
-                        Bench Press
-                    </ExerciseHeader>
-                    {/* <Sets>
-
-                    </Sets> */}
-                </Exercise>
-                <Exercise>
-                    <ExerciseHeader>
-                        Overhead Press
-                    </ExerciseHeader>
-                </Exercise>
+               
                 {/* <AddExerciseCta>
                    <FaPlus class="icon"/> Add Exercise
                 </AddExerciseCta> */}
-                <AddExerciseToSession/>
+                {/* <AddExerciseToSession/> */}
             </Container>
         );
     }
